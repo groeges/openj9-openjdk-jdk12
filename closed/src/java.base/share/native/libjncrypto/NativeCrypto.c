@@ -142,7 +142,7 @@ static void printErrors(void) {
     unsigned long errCode = 0;
 
     fprintf(stderr, "An OpenSSL error occurred\n");
-    while(0 != (errCode = **OSSL_get_error)()))
+    while(0 != (errCode = (*OSSL_get_error)()))
     {
         char err_str[120];
         (*OSSL_error_string_n)(errCode, err_str, (sizeof(err_str) / sizeof(char)));
