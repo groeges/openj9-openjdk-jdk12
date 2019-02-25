@@ -49,6 +49,8 @@ void unload_crypto_library(void *handle) {
 /* Find the symbol in the crypto library (return NULL if not found) */
 void * find_crypto_symbol(void *handle, const char *symname) {
     void * symptr;
+
     symptr =  GetProcAddress(handle, symname);
+
     return symptr;
 }

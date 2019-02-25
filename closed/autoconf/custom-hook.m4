@@ -272,7 +272,7 @@ AC_DEFUN_ONCE([OPENJ9_PLATFORM_SETUP],
       fi
     elif test "x$OPENJDK_BUILD_OS" = xmacosx ; then
       OPENJ9_PLATFORM_CODE=oa64
-      if test "x$OPENJ9_LIBS_SUBDIR" = xdefault; then
+      if test "x$OPENJ9_LIBS_SUBDIR" = xdefault ; then
         OPENJ9_BUILDSPEC=osx_x86-64
       else
         OPENJ9_BUILDSPEC=osx_x86-64_cmprssptrs
@@ -308,9 +308,8 @@ AC_DEFUN_ONCE([OPENJ9_PLATFORM_SETUP],
 AC_DEFUN_ONCE([OPENJDK_VERSION_DETAILS],
 [
   OPENJDK_SHA=`git -C $TOPDIR rev-parse --short HEAD`
-
-  # Find first rev tagged by jdk-12* but not containing "_openj9"
-  LAST_TAGGED_SHA=`git -C $TOPDIR rev-list --exclude="*_openj9*" --tags="jdk-${VERSION_FEATURE}*" --topo-order --max-count=1 2>/dev/null`
+  # Find first rev tagged by jdk-11* but not containing "_openj9"
+  LAST_TAGGED_SHA=`git -C $TOPDIR rev-list --exclude="*_openj9*" --tags="jdk-11*" --topo-order --max-count=1 2>/dev/null`
   if test "x$LAST_TAGGED_SHA" != x ; then
     # Choose the latest tag when there is more than one for the same SHA.
     OPENJDK_TAG=`git -C $TOPDIR tag --points-at "$LAST_TAGGED_SHA" | grep '+' | sort -V | tail -1`

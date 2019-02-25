@@ -90,7 +90,7 @@ public final class SunEntries {
      * and 'jdk.nativeCrypto' is used to disable all native cryptos (Digest,
      * CBC, GCM, and RSA).
      */
-    private static boolean useNativeDigest = false;
+    private static boolean useNativeDigest = true;
 
     // create an aliases List from the specified aliases
     public static List<String> createAliases(String ... aliases) {
