@@ -1299,14 +1299,14 @@ final class CipherCore {
         String nativeCBCStr     = privilegedGetProperty("jdk.nativeCBC");
         String nativeGCMStr     = privilegedGetProperty("jdk.nativeGCM");
 
-        useNativeCrypto = Boolean.parseBoolean(nativeCryptStr) || (nativeCryptStr == null);
+        useNativeCrypto = (nativeCryptStr == null) || Boolean.parseBoolean(nativeCryptStr);
 
         if (!useNativeCrypto) {
             useNativeCBC = false;
             useNativeGCM = false;
         } else {
-            useNativeCBC = Boolean.parseBoolean(nativeCBCStr) || (nativeCBCStr == null);
-            useNativeGCM = Boolean.parseBoolean(nativeGCMStr) || (nativeGCMStr == null);
+            useNativeCBC = (nativeCBCStr == null) || Boolean.parseBoolean(nativeCBCStr);
+            useNativeGCM = (nativeGCMStr == null) || Boolean.parseBoolean(nativeGCMStr);
         }
 
         if (useNativeCBC || useNativeGCM) {
