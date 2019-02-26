@@ -37,12 +37,29 @@ void * load_crypto_library() {
     const char *oldname = "libcrypto.1.0.0.dylib";
     const char *symlink = "libcrypto.dylib";
 
-    result = dlopen (libname,  RTLD_NOW);
+    result = dlopen (libname, RTLD_NOW);
     if (result == NULL) {
-        result = dlopen (oldname,  RTLD_NOW);
+        fprintf(stderr, "Failed to load library: %s\n", libname);
+        fflush(stderr);
+        result = dlopen (oldname, RTLD_NOW);
         if (result == NULL) {
-            result = dlopen (symlink,  RTLD_NOW);
+            fprintf(stderr, "Failed to load library: %s\n", oldname);
+            fflush(stderr);
+            result = dlopen (symlink, RTLD_NOW);
+            if (result == NULL) {
+                fprintf(stderr, "Failed to load library: %s\n", symlink);
+                fflush(stderr);
+            } else {
+                fprintf(stderr, "Loaded library: %s\n", symlink);
+                fflush(stderr);
+            }
+        } else {
+            fprintf(stderr, "Loaded library: %s\n", oldname);
+            fflush(stderr);
         }
+    } else {
+        fprintf(stderr, "Loaded library: %s\n", libname);
+        fflush(stderr);
     }
 
     return result;
@@ -55,5 +72,11 @@ void unload_crypto_library(void *handle) {
 
 /* Find the symbol in the crypto library (return NULL if not found) */
 void * find_crypto_symbol(void *handle, const char *symname) {
-    return  dlsym(handle, symname);
+    void * symptr;
+    symptr = dlsym(handle, symname);
+    if (symptr == NULL) {
+         fprintf(stderr, "Unable to load symbol: %s\n", symname);
+         fflush(stderr);
+    }
+    return symptr;
 }
